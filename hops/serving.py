@@ -191,10 +191,10 @@ def create_or_update(serving_name, artifact_path, model_version=1, model_server=
     _validate_user_serving_input(serving_name, artifact_path, model_version, model_server, kfserving, batching_enabled,
                                  topic_name, num_partitions, num_replicas, instances)
     artifact_path = hdfs.get_plain_path(artifact_path)
-    print("Creating a serving for model {} ...".format(serving_name))
+    print("Creating serving {} for artifact {} ...".format(serving_name, artifact_path))
     _create_or_update_serving_rest(serving_name, artifact_path, model_version, model_server, kfserving, batching_enabled,
                                    topic_name, num_partitions, num_replicas, serving_id, instances)
-    print("Serving for model {} successfully created".format(serving_name))
+    print("Serving {} successfully created".format(serving_name))
 
 
 def _validate_user_serving_input(serving_name, model_path, model_version, model_server, kfserving, batching_enabled, topic_name,
@@ -320,9 +320,11 @@ def _create_or_update_serving_rest(serving_name, model_path, model_version, mode
 
 
 def _detect_model_server(artifact_path):
+    model_server = constants.MODEL_SERVING.MODEL_SERVER_TENSORFLOW_SERVING
     if artifact_path.endswith(".py"):
-        return constants.MODEL_SERVING.MODEL_SERVER_FLASK
-    return constants.MODEL_SERVING.MODEL_SERVER_TENSORFLOW_SERVING
+        model_server = constants.MODEL_SERVING.MODEL_SERVER_FLASK
+    print("Inferring model server from artifact files: {}".format(model_server))
+    return model_server
 
 
 def get_id(serving_name):
