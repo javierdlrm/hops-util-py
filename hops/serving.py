@@ -171,7 +171,7 @@ def create_or_update(serving_name, artifact_path, model_version=1, model_server=
 
     Args:
         :serving_name: name of the serving to create
-        :artifact_path: path to the artifact to serve (tf model dir or sklearn script)
+        :artifact_path: path to the artifact to serve (tf model dir or python script implementing the Predict class)
         :model_version: version of the model to serve
         :model_server: name of the model server to deploy, e.g "TENSORFLOW_SERVING" or "FLASK"
         :kfserving: boolean flag whether to serve the model using KFServing serving tool
