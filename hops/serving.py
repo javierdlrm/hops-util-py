@@ -163,6 +163,7 @@ def create_or_update(serving_name, artifact_path, model_version=1, model_server=
                              instances = 1):
     """
     Creates a serving in Hopsworks if it does not exist, otherwise update the existing one.
+    In case model server is not specified, it is inferred from the artifact files.
 
     Example use-case:
 
